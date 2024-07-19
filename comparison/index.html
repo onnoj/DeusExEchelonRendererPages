@@ -3,34 +3,35 @@
 
 <script
   defer
-  src="https://cdn.jsdelivr.net/npm/img-comparison-slider@8/dist/index.js"
+  src="index.js"
 ></script>
 <link
   rel="stylesheet"
-  href="https://cdn.jsdelivr.net/npm/img-comparison-slider@8/dist/styles.css"
+  href="styles.css"
 />
+
 <script>
 	function mongoose()
 	{
 		const files = [
-			"Pic01.bmp", 
-			"Pic02.bmp", 
-			"Pic03.bmp",
-			"Pic04.bmp", 
-			"Pic05.bmp", 
-			"Pic06.bmp",
-			"Pic07.bmp", 
-			"Pic08.bmp", 
-			"Pic09.bmp",
-			"Pic10.bmp", 
-			"Pic11.bmp", 
-			"Pic12.bmp",
-			"Pic13.bmp",
-			"Pic14.bmp",
-			"Pic15.bmp",
-			"Pic16.bmp",
-			"Pic17.bmp",
-			"Pic18.bmp"
+			"Pic01.png",
+			"Pic02.png",
+			"Pic03.png",
+			"Pic04.png",
+			"Pic05.png",
+			"Pic06.png",
+			"Pic07.png",
+			"Pic08.png",
+			"Pic09.png",
+			"Pic10.png",
+			"Pic11.png",
+			"Pic12.png",
+			"Pic13.png",
+			"Pic14.png",
+			"Pic15.png",
+			"Pic16.png",
+			"Pic17.png",
+			"Pic18.png",
 		];
 		const compDiv = document.getElementById('comparisons');
 		const setARadio = document.querySelector('input[name="setA"]:checked');
@@ -49,8 +50,8 @@
 	    files.forEach(file => {
 			htmlContent += `
 			<img-comparison-slider>
-				<img width="100%" slot="first" src="${setA}/${file}" />
-				<img width="100%" slot="second" src="${setB}/${file}" />
+				<img width="100%" slot="first" src="imagesets/${setA}/${file}" />
+				<img width="100%" slot="second" src="imagesets/${setB}/${file}" />
 			</img-comparison-slider>
 		`;
 	    });
@@ -58,22 +59,125 @@
 		 compDiv.innerHTML = htmlContent;
 	}
 </script>
+
+<style>
+	.set-label {
+		border-radius: 1em;
+		padding: 0.11em;  
+		padding-right: 0.5em;
+		background-color: lightblue;
+	}
+	
+	.set-option {
+		margin: 0.66em
+	}
+	
+	.tooltip {
+		position: relative;
+		cursor: pointer;
+		border-bottom: 1px dotted black;  
+	}
+
+	.tooltip::before {
+		content: attr(data-tooltip);  
+		position: absolute;
+		bottom: 150%;  
+		left: 15%;
+		transform: translateX(-15%);
+		background-color: black;
+		color: white;
+		padding: 5px;
+		border-radius: 5px;
+		white-space: normal;
+		opacity: 0;
+		visibility: hidden;
+		transition: opacity 0.3s;
+		z-index: 999;
+		font-size: 12px;
+		pointer-events: none;
+		width: 20em;
+		word-wrap: break-word; 
+		text-align: center;
+	}
+
+	.tooltip:hover::before {
+		opacity: 1;
+		visibility: visible;
+	}
+</style>
+
 <table>
 	<tr>
-		<td width="200em" valign="top">
-			<form>
-				<p>Set (A) selection:</p>
-				<label><input name="setA" type="radio" value="baseline" selected>Baseline</input></label><br/>
-				<label><input name="setA" type="radio" value="renderer">RTX Renderer</input></label><br/>
-				<label><input name="setA" type="radio" value="rtx2">RTX Renderer roughness:0.9_metallic: 0.55</input></label><br/>
+		<td valign="top" style="border-right: 1px solid">
+			<div style="position: sticky; z-index:999; top: 0px; white-space:nowrap">
+			<form style="padding-right: 1.5em">
+				<h3 style="margin-bottom: 0.33em">Set (A) selection:</h3>
+				<label class="set-label">
+					<input class="set-option" name="setA" type="radio" value="00_original" checked>
+						Original 
+						<span class="tooltip" data-tooltip="Captures from the original game, using the OpenGL renderer.">ℹ️</span> 
+					</input>
+				</label><br/>
+				<label class="set-label">
+					<input class="set-option" name="setA" type="radio" value="01_v0.3.2" >
+						EchelonRenderer v0.3.2 
+						<span class="tooltip" data-tooltip="EchelonRenderer v0.3.2: default RTX values for roughness and metallic (ie 0.5), and scaled attenuation values. Seems too bright. Default unauthored textures.">ℹ️</span> 
+					</input>
+				</label><br/>
+				<label class="set-label">
+					<input class="set-option" name="setA" type="radio" value="02_v0.3.3-att0040" >
+						EchelonRenderer v0.3.3 - att0040 
+						<span class="tooltip" data-tooltip="EchelonRenderer v0.3.3: lowered default roughness and metallic values (0.9 roughness, 0.55 metallic), attenuation: 0.0/0.004/0.0. Default unauthored textures.">ℹ️</span> 
+					</input>
+				</label><br/>
+				<label class="set-label">
+					<input class="set-option" name="setA" type="radio" value="03_v0.3.3-att0030" >
+						EchelonRenderer v0.3.3 - att0030 
+						<span class="tooltip" data-tooltip="EchelonRenderer v0.3.3: lowered default roughness and metallic values (0.9 roughness, 0.55 metallic), attenuation: 0.0/0.003/0.0. Default unauthored textures.">ℹ️</span> 
+					</input>
+				</label><br/>
+				<label class="set-label">
+					<input class="set-option" name="setA" type="radio" value="04_v0.3.3-att0035" >
+						EchelonRenderer v0.3.3 - att0035 
+						<span class="tooltip" data-tooltip="EchelonRenderer v0.3.3: lowered default roughness and metallic values (0.9 roughness, 0.55 metallic), attenuation: 0.0/0.0035/0.0. Default unauthored textures.">ℹ️</span> 
+					</input>
+				</label><br/>
 				
-				<p>Set (B) selection:</p>
-				<label><input name="setB" type="radio" value="baseline">Baseline</input></label><br/>
-				<label><input name="setB" type="radio" value="renderer" selected>RTX Renderer</input></label><br/>
-				<label><input name="setB" type="radio" value="rtx2">RTX Renderer roughness:0.9_metallic: 0.55</input></label><br/>
+				<h3 style="margin-bottom: 0.33em">Set (B) selection:</h3>
+				<label class="set-label">
+					<input class="set-option" name="setB" type="radio" value="00_original" >
+						Original
+						<span class="tooltip" data-tooltip="Captures from the original game, using the OpenGL renderer.">ℹ️</span> 
+					</input>
+				</label><br/>
+				<label class="set-label">
+					<input class="set-option" name="setB" type="radio" value="01_v0.3.2" >
+						EchelonRenderer v0.3.2
+						<span class="tooltip" data-tooltip="EchelonRenderer v0.3.2: default RTX values for roughness and metallic (ie 0.5), and scaled attenuation values. Seems too bright. Default unauthored textures.">ℹ️</span> 
+					</input>
+				</label><br/>
+				<label class="set-label">
+					<input class="set-option" name="setB" type="radio" value="02_v0.3.3-att0040" >
+						EchelonRenderer v0.3.3 - att0040
+						<span class="tooltip" data-tooltip="EchelonRenderer v0.3.3: lowered default roughness and metallic values (0.9 roughness, 0.55 metallic), attenuation: 0.0/0.004/0.0. Default unauthored textures.">ℹ️</span> 
+					</input>
+				</label><br/>
+				<label class="set-label">
+					<input class="set-option" name="setB" type="radio" value="03_v0.3.3-att0030" >
+						EchelonRenderer v0.3.3 - att0030
+						<span class="tooltip" data-tooltip="EchelonRenderer v0.3.3: lowered default roughness and metallic values (0.9 roughness, 0.55 metallic), attenuation: 0.0/0.003/0.0. Default unauthored textures.">ℹ️</span> 
+					</input>
+				</label><br/>
+				<label class="set-label">
+					<input class="set-option" name="setB" type="radio" value="04_v0.3.3-att0035" checked>
+						EchelonRenderer v0.3.3 - att0035
+						<span class="tooltip" data-tooltip="EchelonRenderer v0.3.3: lowered default roughness and metallic values (0.9 roughness, 0.55 metallic), attenuation: 0.0/0.0035/0.0. Default unauthored textures.">ℹ️</span> 
+					</input>
+				</label><br/>
 				<br/>
 				<input name="ok" type="button" value="OK" onclick="mongoose()"/>
 			</form>
+			</div>
 		</td>
 		
 		<td>

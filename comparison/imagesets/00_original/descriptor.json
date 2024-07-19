@@ -1,0 +1,5 @@
+{
+	"id": "Original",
+	"description": "Captures from the original game, using the OpenGL renderer.",
+	"default": "setA"
+}

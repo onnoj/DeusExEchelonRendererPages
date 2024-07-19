@@ -1,0 +1,5 @@
+{
+	"id": "EchelonRenderer v0.3.2",
+	"description": "EchelonRenderer v0.3.2: default RTX values for roughness and metallic (ie 0.5), and scaled attenuation values. Seems too bright. Default unauthored textures.",
+	"default": "none"
+}
