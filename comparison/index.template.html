@@ -137,5 +137,42 @@
 	</tr>
 </table>
 
+    <script>
+        function updateURLParameters() {
+            const setA = document.querySelector('input[name="setA"]:checked').value;
+            const setB = document.querySelector('input[name="setB"]:checked').value;
+            const newUrl = `${window.location.pathname}?setA=${setA}&setB=${setB}`;
+            window.history.replaceState(null, '', newUrl);
+        }
+
+        function setDefaultSelections() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const setA = urlParams.get('setA');
+            const setB = urlParams.get('setB');
+
+            if (setA) {
+                const setAOption = document.querySelector(`input[name="setA"][value="${setA}"]`);
+                if (setAOption) setAOption.checked = true;
+            }
+
+            if (setB) {
+                const setBOption = document.querySelector(`input[name="setB"][value="${setB}"]`);
+                if (setBOption) setBOption.checked = true;
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            setDefaultSelections();
+
+            document.querySelectorAll('input[name="setA"]').forEach((input) => {
+                input.addEventListener('change', updateURLParameters);
+            });
+
+            document.querySelectorAll('input[name="setB"]').forEach((input) => {
+                input.addEventListener('change', updateURLParameters);
+            });
+        });
+    </script>
+	
 </body>
 </html>

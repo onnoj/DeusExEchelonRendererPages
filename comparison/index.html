@@ -125,21 +125,21 @@
 					</input>
 				</label><br/>
 				<label class="set-label">
-					<input class="set-option" name="setA" type="radio" value="02_v0.3.3-att0040" >
-						EchelonRenderer v0.3.3 - att0040 
-						<span class="tooltip" data-tooltip="EchelonRenderer v0.3.3: lowered default roughness and metallic values (0.9 roughness, 0.55 metallic), attenuation: 0.0/0.004/0.0. Default unauthored textures.">ℹ️</span> 
-					</input>
-				</label><br/>
-				<label class="set-label">
-					<input class="set-option" name="setA" type="radio" value="03_v0.3.3-att0030" >
-						EchelonRenderer v0.3.3 - att0030 
-						<span class="tooltip" data-tooltip="EchelonRenderer v0.3.3: lowered default roughness and metallic values (0.9 roughness, 0.55 metallic), attenuation: 0.0/0.003/0.0. Default unauthored textures.">ℹ️</span> 
-					</input>
-				</label><br/>
-				<label class="set-label">
 					<input class="set-option" name="setA" type="radio" value="04_v0.3.3-att0035" >
 						EchelonRenderer v0.3.3 - att0035 
 						<span class="tooltip" data-tooltip="EchelonRenderer v0.3.3: lowered default roughness and metallic values (0.9 roughness, 0.55 metallic), attenuation: 0.0/0.0035/0.0. Default unauthored textures.">ℹ️</span> 
+					</input>
+				</label><br/>
+				<label class="set-label">
+					<input class="set-option" name="setA" type="radio" value="05_v0.3.4-att0035" >
+						EchelonRenderer v0.3.4 - att00035 
+						<span class="tooltip" data-tooltip="EchelonRenderer v0.3.4: different attenuation values. Default unauthored textures.">ℹ️</span> 
+					</input>
+				</label><br/>
+				<label class="set-label">
+					<input class="set-option" name="setA" type="radio" value="08_v0.3.4-final-variousfixes" >
+						EchelonRenderer v0.3.4 - final 
+						<span class="tooltip" data-tooltip="EchelonRenderer v0.3.4: final rtx.conf and attenuation values. Default unauthored textures.">ℹ️</span> 
 					</input>
 				</label><br/>
 				
@@ -157,21 +157,21 @@
 					</input>
 				</label><br/>
 				<label class="set-label">
-					<input class="set-option" name="setB" type="radio" value="02_v0.3.3-att0040" >
-						EchelonRenderer v0.3.3 - att0040
-						<span class="tooltip" data-tooltip="EchelonRenderer v0.3.3: lowered default roughness and metallic values (0.9 roughness, 0.55 metallic), attenuation: 0.0/0.004/0.0. Default unauthored textures.">ℹ️</span> 
-					</input>
-				</label><br/>
-				<label class="set-label">
-					<input class="set-option" name="setB" type="radio" value="03_v0.3.3-att0030" >
-						EchelonRenderer v0.3.3 - att0030
-						<span class="tooltip" data-tooltip="EchelonRenderer v0.3.3: lowered default roughness and metallic values (0.9 roughness, 0.55 metallic), attenuation: 0.0/0.003/0.0. Default unauthored textures.">ℹ️</span> 
-					</input>
-				</label><br/>
-				<label class="set-label">
 					<input class="set-option" name="setB" type="radio" value="04_v0.3.3-att0035" checked>
 						EchelonRenderer v0.3.3 - att0035
 						<span class="tooltip" data-tooltip="EchelonRenderer v0.3.3: lowered default roughness and metallic values (0.9 roughness, 0.55 metallic), attenuation: 0.0/0.0035/0.0. Default unauthored textures.">ℹ️</span> 
+					</input>
+				</label><br/>
+				<label class="set-label">
+					<input class="set-option" name="setB" type="radio" value="05_v0.3.4-att0035" >
+						EchelonRenderer v0.3.4 - att00035
+						<span class="tooltip" data-tooltip="EchelonRenderer v0.3.4: different attenuation values. Default unauthored textures.">ℹ️</span> 
+					</input>
+				</label><br/>
+				<label class="set-label">
+					<input class="set-option" name="setB" type="radio" value="08_v0.3.4-final-variousfixes" checked>
+						EchelonRenderer v0.3.4 - final
+						<span class="tooltip" data-tooltip="EchelonRenderer v0.3.4: final rtx.conf and attenuation values. Default unauthored textures.">ℹ️</span> 
 					</input>
 				</label><br/>
 				<br/>
@@ -187,5 +187,42 @@
 	</tr>
 </table>
 
+    <script>
+        function updateURLParameters() {
+            const setA = document.querySelector('input[name="setA"]:checked').value;
+            const setB = document.querySelector('input[name="setB"]:checked').value;
+            const newUrl = `${window.location.pathname}?setA=${setA}&setB=${setB}`;
+            window.history.replaceState(null, '', newUrl);
+        }
+
+        function setDefaultSelections() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const setA = urlParams.get('setA');
+            const setB = urlParams.get('setB');
+
+            if (setA) {
+                const setAOption = document.querySelector(`input[name="setA"][value="${setA}"]`);
+                if (setAOption) setAOption.checked = true;
+            }
+
+            if (setB) {
+                const setBOption = document.querySelector(`input[name="setB"][value="${setB}"]`);
+                if (setBOption) setBOption.checked = true;
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            setDefaultSelections();
+
+            document.querySelectorAll('input[name="setA"]').forEach((input) => {
+                input.addEventListener('change', updateURLParameters);
+            });
+
+            document.querySelectorAll('input[name="setB"]').forEach((input) => {
+                input.addEventListener('change', updateURLParameters);
+            });
+        });
+    </script>
+	
 </body>
 </html>

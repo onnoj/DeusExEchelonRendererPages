@@ -1,5 +1,0 @@
-{
-	"id": "EchelonRenderer v0.3.3 - att0030",
-	"description": "EchelonRenderer v0.3.3: lowered default roughness and metallic values (0.9 roughness, 0.55 metallic), attenuation: 0.0/0.003/0.0. Default unauthored textures.",
-	"default": "none"
-}
