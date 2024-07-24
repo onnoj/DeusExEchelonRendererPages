@@ -1,5 +1,5 @@
 {
-	"id": "EchelonRenderer v0.3.4 - final2",
+	"id": "EchelonRenderer v0.3.5",
 	"description": "EchelonRenderer v0.3.4: final rtx.conf and attenuation values. Default unauthored textures.",
 	"default": "setB"
 }
