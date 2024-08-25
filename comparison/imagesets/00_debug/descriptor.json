@@ -1,0 +1,5 @@
+{
+	"id": "Debug",
+	"description": "Captures from the renderer, with full rasterization (ie no RTX Remix).",
+	"default": ""
+}

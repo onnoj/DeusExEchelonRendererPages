@@ -32,6 +32,7 @@
 			"Pic16.png",
 			"Pic17.png",
 			"Pic18.png",
+			"Pic19.png",
 		];
 		const compDiv = document.getElementById('comparisons');
 		const setARadio = document.querySelector('input[name="setA"]:checked');
@@ -49,9 +50,9 @@
 	    
 	    files.forEach(file => {
 			htmlContent += `
-			<img-comparison-slider>
-				<img width="100%" slot="first" src="imagesets/${setA}/${file}" />
-				<img width="100%" slot="second" src="imagesets/${setB}/${file}" />
+			<img-comparison-slider name="${file}">
+				<img width="100%" slot="first" src="imagesets/${setA}/${file}" style="background-color: black" />
+				<img width="100%" slot="second" src="imagesets/${setB}/${file}" style="background-color: black" />
 			</img-comparison-slider>
 		`;
 	    });
@@ -114,6 +115,12 @@
 			<form style="padding-right: 1.5em">
 				<h3 style="margin-bottom: 0.33em">Set (A) selection:</h3>
 				<label class="set-label">
+					<input class="set-option" name="setA" type="radio" value="00_debug" >
+						Debug 
+						<span class="tooltip" data-tooltip="Captures from the renderer, with full rasterization (ie no RTX Remix).">ℹ️</span> 
+					</input>
+				</label><br/>
+				<label class="set-label">
 					<input class="set-option" name="setA" type="radio" value="00_original" checked>
 						Original 
 						<span class="tooltip" data-tooltip="Captures from the original game, using the OpenGL renderer.">ℹ️</span> 
@@ -149,8 +156,26 @@
 						<span class="tooltip" data-tooltip="EchelonRenderer v0.3.6: Skybox fixed.">ℹ️</span> 
 					</input>
 				</label><br/>
+				<label class="set-label">
+					<input class="set-option" name="setA" type="radio" value="10_v0.3.7" >
+						EchelonRenderer v0.3.7 
+						<span class="tooltip" data-tooltip="EchelonRenderer v0.3.7">ℹ️</span> 
+					</input>
+				</label><br/>
+				<label class="set-label">
+					<input class="set-option" name="setA" type="radio" value="11_v0.3.8" >
+						EchelonRenderer v0.3.8 
+						<span class="tooltip" data-tooltip="EchelonRenderer v0.3.8">ℹ️</span> 
+					</input>
+				</label><br/>
 				
 				<h3 style="margin-bottom: 0.33em">Set (B) selection:</h3>
+				<label class="set-label">
+					<input class="set-option" name="setB" type="radio" value="00_debug" >
+						Debug
+						<span class="tooltip" data-tooltip="Captures from the renderer, with full rasterization (ie no RTX Remix).">ℹ️</span> 
+					</input>
+				</label><br/>
 				<label class="set-label">
 					<input class="set-option" name="setB" type="radio" value="00_original" >
 						Original
@@ -182,9 +207,21 @@
 					</input>
 				</label><br/>
 				<label class="set-label">
-					<input class="set-option" name="setB" type="radio" value="09_v0.3.6-skybox" checked>
+					<input class="set-option" name="setB" type="radio" value="09_v0.3.6-skybox" >
 						EchelonRenderer v0.3.6 - Skybox
 						<span class="tooltip" data-tooltip="EchelonRenderer v0.3.6: Skybox fixed.">ℹ️</span> 
+					</input>
+				</label><br/>
+				<label class="set-label">
+					<input class="set-option" name="setB" type="radio" value="10_v0.3.7" >
+						EchelonRenderer v0.3.7
+						<span class="tooltip" data-tooltip="EchelonRenderer v0.3.7">ℹ️</span> 
+					</input>
+				</label><br/>
+				<label class="set-label">
+					<input class="set-option" name="setB" type="radio" value="11_v0.3.8" checked>
+						EchelonRenderer v0.3.8
+						<span class="tooltip" data-tooltip="EchelonRenderer v0.3.8">ℹ️</span> 
 					</input>
 				</label><br/>
 				<br/>

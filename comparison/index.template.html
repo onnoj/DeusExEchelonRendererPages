@@ -43,9 +43,9 @@
 	    
 	    files.forEach(file => {
 			htmlContent += `
-			<img-comparison-slider>
-				<img width="100%" slot="first" src="imagesets/${setA}/${file}" />
-				<img width="100%" slot="second" src="imagesets/${setB}/${file}" />
+			<img-comparison-slider name="${file}">
+				<img width="100%" slot="first" src="imagesets/${setA}/${file}" style="background-color: black" />
+				<img width="100%" slot="second" src="imagesets/${setB}/${file}" style="background-color: black" />
 			</img-comparison-slider>
 		`;
 	    });
