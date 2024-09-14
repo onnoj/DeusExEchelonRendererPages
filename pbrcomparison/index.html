@@ -1,0 +1,232 @@
+<html>
+<body>
+
+<script
+  defer
+  src="index.js"
+></script>
+<link
+  rel="stylesheet"
+  href="styles.css"
+/>
+
+<script>
+	function mongoose()
+	{
+		const files = [
+			"00E964C7CB7E4C1F_diffuse.png",
+			"04782901DC8E4EBE_diffuse.png",
+			"0A9C69756A1FBBA9_diffuse.png",
+			"0B1DD268C942F186_diffuse.png",
+			"0FCD2939702C628E_diffuse.png",
+			"3094D699AED3E71E_diffuse.png",
+			"5B3DDC7321AA02B5_diffuse.png",
+			"8841D64591E36755_diffuse.png",
+			"90C43B59F696721F_diffuse.png",
+			"97D667630185524A_diffuse.png",
+			"99F1FC5279DDF9D6_diffuse.png",
+			"9AEC5A2D3D1D0E81_diffuse.png",
+			"AA9662CBABFE64B8_diffuse.png",
+			"AE0E234036031641_diffuse.png",
+			"E167D0B07500AB51_diffuse.png",
+			"00E964C7CB7E4C1F_normal.png",
+			"00E964C7CB7E4C1F_roughness.png",
+			"04782901DC8E4EBE_normal.png",
+			"04782901DC8E4EBE_roughness.png",
+			"0A9C69756A1FBBA9_normal.png",
+			"0A9C69756A1FBBA9_roughness.png",
+			"0B1DD268C942F186_normal.png",
+			"0B1DD268C942F186_roughness.png",
+			"0FCD2939702C628E_normal.png",
+			"0FCD2939702C628E_roughness.png",
+			"3094D699AED3E71E_normal.png",
+			"3094D699AED3E71E_roughness.png",
+			"5B3DDC7321AA02B5_normal.png",
+			"5B3DDC7321AA02B5_roughness.png",
+			"8841D64591E36755_normal.png",
+			"8841D64591E36755_roughness.png",
+			"90C43B59F696721F_normal.png",
+			"90C43B59F696721F_roughness.png",
+			"97D667630185524A_normal.png",
+			"97D667630185524A_roughness.png",
+			"99F1FC5279DDF9D6_normal.png",
+			"99F1FC5279DDF9D6_roughness.png",
+			"9AEC5A2D3D1D0E81_normal.png",
+			"9AEC5A2D3D1D0E81_roughness.png",
+			"AA9662CBABFE64B8_normal.png",
+			"AA9662CBABFE64B8_roughness.png",
+			"AE0E234036031641_normal.png",
+			"AE0E234036031641_roughness.png",
+			"E167D0B07500AB51_normal.png",
+			"E167D0B07500AB51_roughness.png",
+		];
+		const compDiv = document.getElementById('comparisons');
+		const setARadio = document.querySelector('input[name="setA"]:checked');
+		const setBRadio = document.querySelector('input[name="setB"]:checked');
+		
+		if (!setARadio || !setBRadio) {
+			alert('Please select both sets.');
+			return;
+		}
+		
+		const setA = setARadio.value;
+		const setB = setBRadio.value;
+		
+	    let htmlContent = '';
+	    
+	    files.forEach(file => {
+			htmlContent += `
+			<img-comparison-slider name="${file}" style="margin: 2em">
+				<img width="512" slot="first" src="imagesets/${setA}/${file}" style="background-color: black" />
+				<img width="512" slot="second" src="imagesets/${setB}/${file}" style="background-color: black" />
+			</img-comparison-slider>
+		`;
+	    });
+		
+		compDiv.innerHTML = htmlContent;
+		updateURLParameters();
+	}
+</script>
+
+<style>
+	.set-label {
+		border-radius: 1em;
+		padding: 0.11em;  
+		padding-right: 0.5em;
+		background-color: lightblue;
+	}
+	
+	.set-option {
+		margin: 0.66em
+	}
+	
+	.tooltip {
+		position: relative;
+		cursor: pointer;
+		border-bottom: 1px dotted black;  
+	}
+
+	.tooltip::before {
+		content: attr(data-tooltip);  
+		position: absolute;
+		bottom: 150%;  
+		left: 15%;
+		transform: translateX(-15%);
+		background-color: black;
+		color: white;
+		padding: 5px;
+		border-radius: 5px;
+		white-space: normal;
+		opacity: 0;
+		visibility: hidden;
+		transition: opacity 0.3s;
+		z-index: 999;
+		font-size: 12px;
+		pointer-events: none;
+		width: 20em;
+		word-wrap: break-word; 
+		text-align: center;
+	}
+
+	.tooltip:hover::before {
+		opacity: 1;
+		visibility: visible;
+	}
+</style>
+
+<table>
+	<tr>
+		<td valign="top" style="border-right: 1px solid">
+			<div style="position: sticky; z-index:999; top: 0px; white-space:nowrap">
+			<form style="padding-right: 1.5em">
+				<h3 style="margin-bottom: 0.33em">Set (A) selection:</h3>
+				<label class="set-label">
+					<input class="set-option" name="setA" type="radio" value="00_classic" checked>
+						Classic 
+						<span class="tooltip" data-tooltip="">ℹ️</span> 
+					</input>
+				</label><br/>
+				<label class="set-label">
+					<input class="set-option" name="setA" type="radio" value="01_pbrify" checked>
+						PBRify 
+						<span class="tooltip" data-tooltip="">ℹ️</span> 
+					</input>
+				</label><br/>
+				<label class="set-label">
+					<input class="set-option" name="setA" type="radio" value="02_pbrfusion2" >
+						PBRFusion 2.0 
+						<span class="tooltip" data-tooltip="">ℹ️</span> 
+					</input>
+				</label><br/>
+				
+				<h3 style="margin-bottom: 0.33em">Set (B) selection:</h3>
+				<label class="set-label">
+					<input class="set-option" name="setB" type="radio" value="00_classic" >
+						Classic
+						<span class="tooltip" data-tooltip="">ℹ️</span> 
+					</input>
+				</label><br/>
+				<label class="set-label">
+					<input class="set-option" name="setB" type="radio" value="01_pbrify" >
+						PBRify
+						<span class="tooltip" data-tooltip="">ℹ️</span> 
+					</input>
+				</label><br/>
+				<label class="set-label">
+					<input class="set-option" name="setB" type="radio" value="02_pbrfusion2" checked>
+						PBRFusion 2.0
+						<span class="tooltip" data-tooltip="">ℹ️</span> 
+					</input>
+				</label><br/>
+				<br/>
+				<input name="ok" type="button" value="OK" onclick="mongoose()"/>
+			</form>
+			</div>
+		</td>
+		
+		<td>
+			<div id="comparisons">
+			</div>
+		</td>
+	</tr>
+</table>
+
+    <script>
+        function updateURLParameters() {
+            const setA = document.querySelector('input[name="setA"]:checked').value;
+            const setB = document.querySelector('input[name="setB"]:checked').value;
+            const newUrl = `${window.location.pathname}?setA=${setA}&setB=${setB}`;
+            window.history.replaceState(null, '', newUrl);
+        }
+
+        function setDefaultSelections() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const setA = urlParams.get('setA');
+            const setB = urlParams.get('setB');
+
+            if (setA) {
+                const setAOption = document.querySelector(`input[name="setA"][value="${setA}"]`);
+                if (setAOption) setAOption.checked = true;
+            }
+
+            if (setB) {
+                const setBOption = document.querySelector(`input[name="setB"][value="${setB}"]`);
+                if (setBOption) setBOption.checked = true;
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            setDefaultSelections();
+
+            document.querySelectorAll('input[name="setA"]').forEach((input) => {
+                input.addEventListener('change', updateURLParameters);
+            });
+
+            document.querySelectorAll('input[name="setB"]').forEach((input) => {
+                input.addEventListener('change', updateURLParameters);
+            });
+        });
+    </script>
+	
+</body>
+</html>

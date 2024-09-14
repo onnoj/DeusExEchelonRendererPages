@@ -1,0 +1,179 @@
+<html>
+<body>
+<!--
+<script
+  defer
+  src="https://cdn.jsdelivr.net/npm/img-comparison-slider@8/dist/index.js"
+></script>
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/img-comparison-slider@8/dist/styles.css"
+/>
+-->
+<script
+  defer
+  src="index.js"
+></script>
+<link
+  rel="stylesheet"
+  href="styles.css"
+/>
+
+<script>
+	function mongoose()
+	{
+		const files = [
+			{{- range .FileNames }}
+			"{{.}}",
+			{{- end }}
+		];
+		const compDiv = document.getElementById('comparisons');
+		const setARadio = document.querySelector('input[name="setA"]:checked');
+		const setBRadio = document.querySelector('input[name="setB"]:checked');
+		
+		if (!setARadio || !setBRadio) {
+			alert('Please select both sets.');
+			return;
+		}
+		
+		const setA = setARadio.value;
+		const setB = setBRadio.value;
+		
+	    let htmlContent = '';
+	    
+	    files.forEach(file => {
+			htmlContent += `
+			<img-comparison-slider name="${file}" style="margin: 2em">
+				<img width="512" slot="first" src="imagesets/${setA}/${file}" style="background-color: black" />
+				<img width="512" slot="second" src="imagesets/${setB}/${file}" style="background-color: black" />
+			</img-comparison-slider>
+		`;
+	    });
+		
+		compDiv.innerHTML = htmlContent;
+		updateURLParameters();
+	}
+</script>
+
+<style>
+	.set-label {
+		border-radius: 1em;
+		padding: 0.11em;  
+		padding-right: 0.5em;
+		background-color: lightblue;
+	}
+	
+	.set-option {
+		margin: 0.66em
+	}
+	
+	.tooltip {
+		position: relative;
+		cursor: pointer;
+		border-bottom: 1px dotted black; /* Optional: Add an underline to indicate a tooltip */
+	}
+
+	.tooltip::before {
+		content: attr(data-tooltip); /* Use the data-tooltip attribute value */
+		position: absolute;
+		bottom: 150%; /* Position the tooltip above the text */
+		left: 15%;
+		transform: translateX(-15%);
+		background-color: black;
+		color: white;
+		padding: 5px;
+		border-radius: 5px;
+		white-space: normal;
+		opacity: 0;
+		visibility: hidden;
+		transition: opacity 0.3s;
+		z-index: 999;
+		font-size: 12px;
+		pointer-events: none;
+		width: 20em;
+		word-wrap: break-word; 
+		text-align: center;
+	}
+
+	.tooltip:hover::before {
+		opacity: 1;
+		visibility: visible;
+	}
+</style>
+
+<table>
+	<tr>
+		<td valign="top" style="border-right: 1px solid">
+			<div style="position: sticky; z-index:999; top: 0px; white-space:nowrap">
+			<form style="padding-right: 1.5em">
+				<h3 style="margin-bottom: 0.33em">Set (A) selection:</h3>
+				{{- range .DataSets }}
+				<label class="set-label">
+					<input class="set-option" name="setA" type="radio" value="{{ .FolderName }}" {{if eq .Default "setA"}}checked{{end}}>
+						{{ .Identifier }} 
+						<span class="tooltip" data-tooltip="{{.Description}}">ℹ️</span> 
+					</input>
+				</label><br/>
+				{{- end }}
+				
+				<h3 style="margin-bottom: 0.33em">Set (B) selection:</h3>
+				{{- range .DataSets }}
+				<label class="set-label">
+					<input class="set-option" name="setB" type="radio" value="{{ .FolderName }}" {{if eq .Default "setB"}}checked{{end}}>
+						{{ .Identifier }}
+						<span class="tooltip" data-tooltip="{{.Description}}">ℹ️</span> 
+					</input>
+				</label><br/>
+				{{- end }}
+				<br/>
+				<input name="ok" type="button" value="OK" onclick="mongoose()"/>
+			</form>
+			</div>
+		</td>
+		
+		<td>
+			<div id="comparisons">
+			</div>
+		</td>
+	</tr>
+</table>
+
+    <script>
+        function updateURLParameters() {
+            const setA = document.querySelector('input[name="setA"]:checked').value;
+            const setB = document.querySelector('input[name="setB"]:checked').value;
+            const newUrl = `${window.location.pathname}?setA=${setA}&setB=${setB}`;
+            window.history.replaceState(null, '', newUrl);
+        }
+
+        function setDefaultSelections() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const setA = urlParams.get('setA');
+            const setB = urlParams.get('setB');
+
+            if (setA) {
+                const setAOption = document.querySelector(`input[name="setA"][value="${setA}"]`);
+                if (setAOption) setAOption.checked = true;
+            }
+
+            if (setB) {
+                const setBOption = document.querySelector(`input[name="setB"][value="${setB}"]`);
+                if (setBOption) setBOption.checked = true;
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            setDefaultSelections();
+
+            document.querySelectorAll('input[name="setA"]').forEach((input) => {
+                input.addEventListener('change', updateURLParameters);
+            });
+
+            document.querySelectorAll('input[name="setB"]').forEach((input) => {
+                input.addEventListener('change', updateURLParameters);
+            });
+        });
+    </script>
+	
+</body>
+</html>
