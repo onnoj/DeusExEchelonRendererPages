@@ -1,0 +1,5 @@
+{
+	"id": "EchelonRenderer v0.3.11",
+	"description": "Various resolution/renderer fixes",
+	"default": "setB"
+}
